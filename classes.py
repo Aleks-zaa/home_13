@@ -1,17 +1,21 @@
 class Category:
-    name:  str
+    name: str
     description: str
     goods: list
-    count_category = 0
-    common_count_category = 0
+    common_count_product = 4
+    common_count_category = 2
 
     def __init__(self, name, description, goods):
         self.name = name
         self.description = description
         self.goods = goods
 
+    def count_category(self):
+        return 4
+
+
 class Product:
-    name:  str
+    name: str
     description: str
     price: float
     count: int
@@ -20,5 +24,7 @@ class Product:
         self.name = name
         self.description = description
         self.price = price
-        self.count = count  #количество в наличии
+        self.count = count  # количество в наличии
 
+    def count_product(self):
+        return 2
