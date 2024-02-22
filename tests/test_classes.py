@@ -1,5 +1,5 @@
 import pytest
-from classes import Category, Product
+from src.classes import Category, Product
 
 
 @pytest.fixture
@@ -24,11 +24,11 @@ def test_init_product(test_product):
     assert test_product.name == '55" QLED 4K'
     assert test_product.description == 'Фоновая подсветка'
     assert test_product.price == 123000.0
-    assert test_product.count == 7
+    assert test_product.ct == 7
 
 
 def test_count_category(test_category):
-    assert test_category.count_category() == 4
+    assert test_category.count_category() == 2
 
 
 def test_count_product(test_product):

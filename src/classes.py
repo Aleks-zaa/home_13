@@ -5,26 +5,26 @@ class Category:
     common_count_product = 4
     common_count_category = 2
 
-    def __init__(self, name, description, goods):
+    def __init__(self, name: str, description: str, goods: list):
         self.name = name
         self.description = description
-        self.goods = goods
+        self.__goods = goods
 
     def count_category(self):
-        return 4
+        return len(self.__goods)
 
 
 class Product:
     name: str
     description: str
     price: float
-    count: int
+    ct: int  #количество в наличии
 
-    def __init__(self, name, description, price, count):
+    def __init__(self, name: str, description: str, price: float, ct: int):
         self.name = name
         self.description = description
         self.price = price
-        self.count = count  # количество в наличии
+        self.ct = ct
 
     def count_product(self):
-        return 2
+        return self.ct
