@@ -32,4 +32,4 @@ def test_count_category(test_category):
 
 
 def test_count_product(test_product):
-    assert test_product.count_product() == 2
+    assert test_product.count_product() == 4
