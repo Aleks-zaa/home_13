@@ -28,10 +28,13 @@ pt = append_list_product()
 ct = Category("Смартфоны", "Смартфоны, как средство", pt)
 
 obj_goods = ct.goods
-new_good = {"name": "UMI", "description": "100GB, Серый цвет, 200MP камера", "price": 777777.0, "quantity": 999}
-ct.goods = new_good
+new_goods = Product.create_goods()
+ct.goods = new_goods
+# # new_good = {"name": "UMI", "description": "100GB, Серый цвет, 200MP камера", "price": 777777.0, "quantity": 999}
+# ct.goods = new_good
+
 
 list_obj_goods = ct.list_goods
-
+print(list_obj_goods)
 print(obj_goods)
 print(','.join(list_obj_goods).replace(',', '\n'))

@@ -2,8 +2,8 @@ class Category:
     name: str
     description: str
     goods: list
-    common_count_product = 4
-    common_count_category = 2
+    common_count_product: int
+    common_count_category: int
 
     def __init__(self, name: str, description: str, goods: list):
         self.name = name
@@ -51,12 +51,17 @@ class Product:
         return self.quantity
 
     @classmethod
-    def create_goods(cls, name, description, price, quantity):
-        if name == Category.goods[0]:
-            quantity += Category.goods[3]
-            return cls(name, description, price, quantity)
-        else:
-            return cls(name, description, price, quantity)
+    def create_goods(cls):
+        goods = {}
+        name = input("Введите название - ")
+        goods['name'] = name
+        description = input("Введите описание - ")
+        goods['description'] = description
+        price = input("Введите цену - ")
+        goods['price'] = price
+        quantity = input("Ведите количество - ")
+        goods['quantity'] = quantity
+        return goods
 
     @property
     def correct_price(self):
