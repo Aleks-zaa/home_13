@@ -2,13 +2,15 @@ class Category:
     name: str
     description: str
     goods: list
-    common_count_product: int
-    common_count_category: int
+    category_count = 0
+    product_count = 0
 
     def __init__(self, name: str, description: str, goods: list):
         self.name = name
         self.description = description
         self.__goods = goods
+        Category.category_count += 1
+        Category.product_count += len(self.__goods)
 
     @property
     def goods(self):
@@ -50,8 +52,8 @@ class Product:
     def count_product(self):
         return self.quantity
 
-    @classmethod
-    def create_goods(cls):
+    @staticmethod
+    def create_goods():
         goods = {}
         name = input("Введите название - ")
         goods['name'] = name
@@ -62,6 +64,10 @@ class Product:
         quantity = input("Ведите количество - ")
         goods['quantity'] = quantity
         return goods
+
+    @classmethod
+    def new_product(cls, product_data: dict):
+        return cls(**product_data)
 
     @property
     def correct_price(self):
