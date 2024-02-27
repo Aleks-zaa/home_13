@@ -12,6 +12,15 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__goods)
 
+    def __str__(self):
+        return f"{self.name}, {self.description}, {self.goods}"
+
+    def __len__(self):
+        q = 0
+        for i in self.__goods:
+            q += i.quantity
+        return q
+
     @property
     def goods(self):
         return self.__goods
@@ -33,9 +42,6 @@ class Category:
             ls_goods.append(f'"{nm}" - {price} руб., Остаток: {quantity} шт.')
         return ls_goods
 
-    def __str__(self):
-        return f"{self.name}, {self.description}, {self.goods}"
-
 
 class Product:
     name: str
@@ -48,6 +54,12 @@ class Product:
         self.description = description
         self.price = price
         self.quantity = quantity
+
+    def __str__(self):
+        return f"{self.name}, {self.description}, {self.price} руб., Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        return self.price * self.quantity + other.price * other.quntity
 
     def count_product(self):
         return self.quantity
