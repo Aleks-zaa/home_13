@@ -28,7 +28,7 @@ def list_category():
     return cat
 
 
-print(list_category())
+# print(list_category())
 
 
 def list_product():
@@ -37,7 +37,6 @@ def list_product():
     product = []
     for item in data:
         prod = item['products']
-
         for i in prod:
             if i.get('name') in product:
                 continue
@@ -50,19 +49,34 @@ def append_list_product():
     data = read_json(file)
     products = []
     goods = []
+    cat = 0
+    prod = 0
     for category in data:
+        cat += 1
         for product in category['products']:
             # products.append(Product(**product))
             goods.append(product)
+            prod += 1
+
+    # print(cat)
     return goods
 
 
 pt = append_list_product()
+goods = []
+for category in list_data:
+    ct = Category('', '', pt)
+    print(category)
+    for product in category['products']:
+        # products.append(Product(**product))
+        goods.append(product)
+
 
 ct = Category('', '', pt)
-print(ct)
+# print(pt)
 
-# obj_goods = ct.goods
+
+obj_goods = ct.goods
 product_data = {'name': 'Samsung S500', 'description': '256GB, Серый', 'price': 7894.0, 'quantity': 10}
 # product_data = Product.create_goods()
 new_product_instance = Product.new_product(product_data)
