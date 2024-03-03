@@ -56,6 +56,6 @@ def create_obj_category():
     for category in list_data:
         pt = category['products']
         ct = Category(category.get('name'), category.get('description'), pt)
-        print(pt)
+        # print(pt)
         return ct
 

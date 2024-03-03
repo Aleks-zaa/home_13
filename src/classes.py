@@ -61,6 +61,7 @@ class Product:
     def __add__(self, other):
         return self.price * self.quantity + other.price * other.quntity
 
+
     def count_product(self):
         return self.quantity
 
