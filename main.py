@@ -37,11 +37,13 @@ def list_product():
     product = []
     for item in data:
         prod = item['products']
+        print(prod)
         for i in prod:
             if i.get('name') in product:
                 continue
             else:
                 product.append(i.get('name'))
+
     return product
 
 
@@ -64,6 +66,7 @@ def append_list_product():
 pt = append_list_product()
 goods = []
 for category in list_data:
+    pt = category['products']
     ct = Category(category.get('name'), category.get('description'), pt)
     # print(category)
     print(ct)

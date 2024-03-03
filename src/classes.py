@@ -13,7 +13,7 @@ class Category:
         Category.product_count += len(self.__goods)
 
     def __str__(self):
-        return f"{self.name}, количество продуктов: {Category.product_count} шт"
+        return f"{self.name}, количество продуктов: {len(self.__goods)} шт"
 
     def __len__(self):
         q = 0
