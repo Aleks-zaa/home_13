@@ -65,15 +65,16 @@ def append_list_product():
 pt = append_list_product()
 goods = []
 for category in list_data:
-    ct = Category('', '', pt)
+    ct = Category(category.get('name'), category.get('description'), pt)
     print(category)
+    print(ct)
     for product in category['products']:
         # products.append(Product(**product))
         goods.append(product)
 
 
-ct = Category('', '', pt)
-# print(pt)
+# ct = Category('', '', pt)
+
 
 
 obj_goods = ct.goods
