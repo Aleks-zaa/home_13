@@ -18,7 +18,7 @@ class Category:
     def __len__(self):
         q = 0
         for i in self.__goods:
-            q += i.quantity
+            q += i.get('quantity')
         return q
 
     @property
