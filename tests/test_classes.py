@@ -1,5 +1,9 @@
 import pytest
-from src.classes import Category, Product
+from src.classes import Category, Product, Phone, Grass
+
+
+# from src.category import Category
+# from src.product import Product
 
 
 @pytest.fixture
@@ -11,7 +15,17 @@ def test_category():
 
 @pytest.fixture
 def test_product():
-    return Product('55" QLED 4K', 'Фоновая подсветка', 123000.0, 7)
+    return Product('55" QLED 4K', 'Фоновая подсветка', 123000.0, 7, 'red')
+
+
+@pytest.fixture
+def test_phone():
+    return Phone('Amoled', 'Новый телефон', 500.0, 2, 100, 'UMI', 125, 'white')
+
+
+@pytest.fixture
+def test_grass():
+    return Grass('Grass', 'Травка', 800.0, 4, 'RUS', 1, 'green')
 
 
 def test_init_category(test_category):
@@ -24,12 +38,34 @@ def test_init_product(test_product):
     assert test_product.name == '55" QLED 4K'
     assert test_product.description == 'Фоновая подсветка'
     assert test_product.price == 123000.0
-    assert test_product.ct == 7
+    assert test_product.quantity == 7
+    assert test_product.color == 'red'
+
+
+def test_init_phone(test_phone):
+    assert test_phone.name == 'Amoled'
+    assert test_phone.description == 'Новый телефон'
+    assert test_phone.price == 500.0
+    assert test_phone.quantity == 2
+    assert test_phone.power == 100
+    assert test_phone.model == 'UMI'
+    assert test_phone.memory == 125
+    assert test_phone.color == 'white'
+
+
+def test_init_grass(test_grass):
+    assert test_grass.name == 'Grass'
+    assert test_grass.description == 'Травка'
+    assert test_grass.price == 800.0
+    assert test_grass.quantity == 4
+    assert test_grass.country == 'RUS'
+    assert test_grass.period == 1
+    assert test_grass.color == 'green'
 
 
 def test_count_category(test_category):
-    assert test_category.count_category() == 2
+    assert test_category.count_goods() == 2
 
 
 def test_count_product(test_product):
-    assert test_product.count_product() == 4
+    assert test_product.count_product() == 7

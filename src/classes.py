@@ -25,9 +25,23 @@ class Category:
     def goods(self):
         return self.__goods
 
+    # @goods.setter
+    # def goods(self, value):
+    #     if isinstance(type(value), self.__class__):
+    #         self.__goods.append(value)
+    #     print(type(value))
+    #     raise TypeError
+
     @goods.setter
     def goods(self, value):
         self.__goods.append(value)
+
+    @staticmethod
+    def add_good(value):
+        if isinstance(value, Category):
+            Category.__goods.append(value)
+
+        raise TypeError
 
     def count_goods(self):
         return len(self.__goods)
@@ -47,20 +61,23 @@ class Product:
     name: str
     description: str
     price: float
+    color: str
     ct: int  # количество в наличии
 
-    def __init__(self, name: str, description: str, price: float, quantity: int):
+    def __init__(self, name: str, description: str, price: float, quantity: int, color: str):
         self.name = name
         self.description = description
         self.price = price
         self.quantity = quantity
+        self.color = color
 
     def __str__(self):
         return f"{self.name}, {self.description}, {self.price} руб., Остаток: {self.quantity} шт."
 
     def __add__(self, other):
-        return self.price * self.quantity + other.price * other.quntity
-
+        if issubclass(type(self), type(other)):
+            return self.price * self.quantity + other.price * other.quantity
+        raise TypeError
 
     def count_product(self):
         return self.quantity
@@ -97,3 +114,42 @@ class Product:
                 self.price = value.price
         else:
             self.price = value.price
+
+
+class Phone(Product):
+
+    def __init__(self, name: str, description: str, price: float, quantity: int, power: float, model: str,
+                 memory: float, color: str):
+        self.power = power
+        self.model = model
+        self.memory = memory
+        super().__init__(name, description, price, quantity, color)
+
+
+class Grass(Product):
+
+    def __init__(self, name: str, description: str, price: float, quantity: int, country: str, period: float,
+                 color: str):
+        self.period = period
+        self.country = country
+        super().__init__(name, description, price, quantity, color)
+
+
+# if __name__ == '__main__':
+#     # a = [{"name": "Sams Ul",
+#     #       "description": "125GB",
+#     #       "price": 1000.0,
+#     #       "quantity": 6, "color": "black", "power": 100, "model": "GG", "memory": 200}]
+#     #
+#     # exp = Category('Смартфоны', 'для удобства жизни', [{
+#     #     "name": "Samsung Galaxy C23 Ultra",
+#     #     "description": "256GB, Серый цвет, 200MP камера",
+#     #     "price": 180000.0,
+#     #     "quantity": 5, "color": "black"}])
+#     # exp.goods = a
+#     # print(exp.goods)
+#
+#     a1 = Product("Sams Ul", "125GB", 10.0, 2, "black")
+#     b1 = Phone("Umi", '555', 50, 2, 500, '7', 125, 'black')
+#     res = b1 + b1
+#     print(res)
