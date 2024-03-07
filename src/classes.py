@@ -1,4 +1,13 @@
-class Category:
+from abc import ABC, abstractmethod
+
+
+class SampleOrder(ABC):
+    @abstractmethod
+    def __init__(self):
+        pass
+
+
+class Category(SampleOrder):
     name: str
     description: str
     goods: list
@@ -57,7 +66,32 @@ class Category:
         return ls_goods
 
 
-class Product:
+class Order(SampleOrder):
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+
+class SampleProduct(ABC):
+    @abstractmethod
+    def __init__(self):
+        pass
+
+
+class MixinProduct:
+    def __init__(self, name, description, price, quantity):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.quantity = quantity
+        super().__init__()
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.name}', '{self.description}', {self.price}, {self.quantity})"
+
+
+class Product(SampleProduct, MixinProduct):
     name: str
     description: str
     price: float
@@ -70,14 +104,15 @@ class Product:
         self.price = price
         self.quantity = quantity
         self.color = color
+        super().__init__()
 
     def __str__(self):
         return f"{self.name}, {self.description}, {self.price} руб., Остаток: {self.quantity} шт."
 
     def __add__(self, other):
-        if issubclass(type(self), type(other)):
+        if issubclass(self.__class__, other.__class__):
             return self.price * self.quantity + other.price * other.quantity
-        raise TypeError
+        raise TypeError(f'разные классы')
 
     def count_product(self):
         return self.quantity
@@ -116,7 +151,7 @@ class Product:
             self.price = value.price
 
 
-class Phone(Product):
+class Phone(Product, MixinProduct):
 
     def __init__(self, name: str, description: str, price: float, quantity: int, power: float, model: str,
                  memory: float, color: str):
@@ -126,7 +161,7 @@ class Phone(Product):
         super().__init__(name, description, price, quantity, color)
 
 
-class Grass(Product):
+class Grass(Product, MixinProduct):
 
     def __init__(self, name: str, description: str, price: float, quantity: int, country: str, period: float,
                  color: str):
@@ -135,21 +170,25 @@ class Grass(Product):
         super().__init__(name, description, price, quantity, color)
 
 
-# if __name__ == '__main__':
-#     # a = [{"name": "Sams Ul",
-#     #       "description": "125GB",
-#     #       "price": 1000.0,
-#     #       "quantity": 6, "color": "black", "power": 100, "model": "GG", "memory": 200}]
-#     #
-#     # exp = Category('Смартфоны', 'для удобства жизни', [{
-#     #     "name": "Samsung Galaxy C23 Ultra",
-#     #     "description": "256GB, Серый цвет, 200MP камера",
-#     #     "price": 180000.0,
-#     #     "quantity": 5, "color": "black"}])
-#     # exp.goods = a
-#     # print(exp.goods)
-#
-#     a1 = Product("Sams Ul", "125GB", 10.0, 2, "black")
-#     b1 = Phone("Umi", '555', 50, 2, 500, '7', 125, 'black')
-#     res = b1 + b1
-#     print(res)
+if __name__ == '__main__':
+    #     # a = [{"name": "Sams Ul",
+    #     #       "description": "125GB",
+    #     #       "price": 1000.0,
+    #     #       "quantity": 6, "color": "black", "power": 100, "model": "GG", "memory": 200}]
+    #     #
+    #     # exp = Category('Смартфоны', 'для удобства жизни', [{
+    #     #     "name": "Samsung Galaxy C23 Ultra",
+    #     #     "description": "256GB, Серый цвет, 200MP камера",
+    #     #     "price": 180000.0,
+    #     #     "quantity": 5, "color": "black"}])
+    #     # exp.goods = a
+    #     # print(exp.goods)
+    #
+    a1 = Product("Sams Ul", "125GB", 10.0, 2, "black")
+    b1 = Phone("Umi", '555', 50, 2, 500, '7', 125, 'black')
+    c1 = Grass("Лопух", 'Большой', 100, 3, 'Россия', 1, 'black')
+    # res = a1 + b1
+    # print(res)
+    print(repr(a1))
+    print(repr(b1))
+    print(repr(c1))
