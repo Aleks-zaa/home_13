@@ -21,7 +21,7 @@ if __name__ == '__main__':
     #
     product_data = [{'name': 'UMI S500', 'description': '256GB, Серый', 'price': 7894.0, 'quantity': 10,
                      "color": "black"}]
-
+    #
     ct = Category('', '', [])
     print(ct.add_good(product_data))
 

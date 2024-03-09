@@ -34,22 +34,14 @@ class Category(SampleOrder):
     def goods(self):
         return self.__goods
 
-    # @goods.setter
-    # def goods(self, value):
-    #     if isinstance(type(value), self.__class__):
-    #         self.__goods.append(value)
-    #     print(type(value))
-    #     raise TypeError
-
     @goods.setter
     def goods(self, value):
         self.__goods.append(value)
 
     @staticmethod
     def add_good(value):
-        if isinstance(value, Category):
+        if isinstance(value, Product):
             Category.__goods.append(value)
-
         raise TypeError
 
     def count_goods(self):
@@ -75,7 +67,7 @@ class Order(SampleOrder):
 
 class SampleProduct(ABC):
     @abstractmethod
-    def new_product(self):
+    def new_product(self, *args):
         pass
 
 
@@ -170,6 +162,14 @@ class Grass(Product, MixinProduct):
 
 
 if __name__ == '__main__':
+    a1 = Product("Sams Ul", "125GB", 10.0, 2, "black")
+    product_data = [{'name': 'UMI S500', 'description': '256GB, Серый', 'price': 7894.0, 'quantity': 10,
+                     "color": "black"}]
+
+    pt = Category.add_good(a1)
+    print(type(pt))
+
+
     #     # a = [{"name": "Sams Ul",
     #     #       "description": "125GB",
     #     #       "price": 1000.0,
@@ -183,11 +183,13 @@ if __name__ == '__main__':
     #     # exp.goods = a
     #     # print(exp.goods)
     #
-    a1 = Product("Sams Ul", "125GB", 10.0, 2, "black")
-    b1 = Phone("Umi", '555', 50, 2, 500, '7', 125, 'black')
-    c1 = Grass("Лопух", 'Большой', 100, 3, 'Россия', 1, 'black')
+
+
+
+    # b1 = Phone("Umi", '555', 50, 2, 500, '7', 125, 'black')
+    # c1 = Grass("Лопух", 'Большой', 100, 3, 'Россия', 1, 'black')
     # res = a1 + b1
     # print(res)
-    print(repr(a1))
-    print(repr(b1))
-    print(repr(c1))
+    # print(repr(a1))
+    # print(repr(b1))
+    # print(repr(c1))
