@@ -30,19 +30,26 @@ class Category(SampleOrder):
             q += i.get('quantity')
         return q
 
+    def __add__(self, other):
+        if isinstance(other, Product):
+            self.__goods.append(other)
+        else:
+            raise TypeError
+
     @property
     def goods(self):
         return self.__goods
 
     @goods.setter
     def goods(self, value):
+
         self.__goods.append(value)
 
-    @staticmethod
-    def add_good(value):
-        if isinstance(value, Product):
-            Category.__goods.append(value)
-        raise TypeError
+    # @staticmethod
+    # def add_good(value):
+    #     if isinstance(value, Product):
+    #         Category.__goods.append(value)
+    #     raise TypeError
 
     def count_goods(self):
         return len(self.__goods)
@@ -165,11 +172,14 @@ if __name__ == '__main__':
     a1 = Product("Sams Ul", "125GB", 10.0, 2, "black")
     product_data = [{'name': 'UMI S500', 'description': '256GB, Серый', 'price': 7894.0, 'quantity': 10,
                      "color": "black"}]
+    r = [1, 2]
+    pt = Category('qqq', 'www', r)
 
-    pt = Category.add_good(a1)
-    print(type(pt))
-
-
+    print(pt)
+    pt + a1
+    print(pt.goods)
+    pt + 1
+    print(pt.goods)
     #     # a = [{"name": "Sams Ul",
     #     #       "description": "125GB",
     #     #       "price": 1000.0,
