@@ -7,6 +7,17 @@ class SampleOrder(ABC):
         pass
 
 
+class UserError(Exception):
+    """ Пользовательский класс обработки исключения """
+    message = ""
+
+    def init(self, *args, **kwargs):
+        self.message = args[0] if args else 'Проблемы с параметрами объекта'
+
+    def str(self):
+        return self.message
+
+
 class Category(SampleOrder):
     name: str
     description: str
@@ -30,11 +41,11 @@ class Category(SampleOrder):
             q += i.get('quantity')
         return q
 
-    def __add__(self, other):
-        if isinstance(other, Product):
-            self.__goods.append(other)
-        else:
-            raise TypeError
+    # def __add__(self, other):
+    #     if isinstance(other, Product):
+    #         self.__goods.append(other)
+    #     else:
+    #         raise TypeError('Не тот класс(метод в Категории)')
 
     @property
     def goods(self):
@@ -42,14 +53,37 @@ class Category(SampleOrder):
 
     @goods.setter
     def goods(self, value):
-
         self.__goods.append(value)
 
-    # @staticmethod
-    # def add_good(value):
-    #     if isinstance(value, Product):
-    #         Category.__goods.append(value)
-    #     raise TypeError
+    def add_good(self, value):
+        if isinstance(value, Product):
+            try:
+                if value.quantity <= 0:
+                    raise UserError
+            except UserError as e:
+                e.message = "Продукт с нулевым количеством не может быть добавлен"
+                print(e)
+            else:
+                self.__goods.append(value)
+                print('Продукт добавлен')
+                return self.__goods
+            finally:
+                print('Обработка завершена')
+                return self.__goods
+        raise TypeError('Не соответствует классу')
+
+    def avg_price(self):
+        total_sum = 0
+        total_quantity = 0
+        try:
+            for item in self.__goods:
+                total_sum += item.price * item.quantity
+                total_quantity += item.quantity
+            return total_sum / total_quantity
+        except ZeroDivisionError as e:
+            e.message = "Нулевое значение"
+            print(e)
+            return 0
 
     def count_goods(self):
         return len(self.__goods)
@@ -86,10 +120,10 @@ class MixinProduct:
         object_attributes = ''
         for k, v in self.__dict__.items():
             object_attributes += f'{k}: {v},'
-        return f"создан объект со свойствами {object_attributes})"
+        return f"создан объект со свойствами {object_attributes}"
 
 
-class Product(SampleProduct, MixinProduct):
+class Product(SampleProduct):
     name: str
     description: str
     price: float
@@ -169,17 +203,30 @@ class Grass(Product, MixinProduct):
 
 
 if __name__ == '__main__':
-    a1 = Product("Sams Ul", "125GB", 10.0, 2, "black")
-    product_data = [{'name': 'UMI S500', 'description': '256GB, Серый', 'price': 7894.0, 'quantity': 10,
-                     "color": "black"}]
-    r = [1, 2]
-    pt = Category('qqq', 'www', r)
+    a1 = Product("Sams", "15GB", 100.0, 0, "black")
+    b1 = Product("ttt", "10GB", 500.0, 2, "red")
+    # product_data = [{'name': 'UMI 999', 'description': '000GB, Серый', 'price': 444.0, 'quantity': 10,
+    #                  "color": "black"}]
+    list_goods = [
+        {'name': 'Samsung Galaxy C23 Ultra', 'description': '256GB, Серый цвет, 200MP камера', 'price': 180000.0,
+         'quantity': 5, 'color': 'black'},
+        {'name': 'Iphone 15', 'description': '512GB, Gray space', 'price': 210000.0, 'quantity': 8, 'color': 'black'},
+        {'name': 'Xiaomi Redmi Note 11', 'description': '1024GB, Синий', 'price': 31000.0, 'quantity': 14,
+         'color': 'black'}]
 
-    print(pt)
-    pt + a1
+    pt = Category('port', 'www', list_goods)
+    print(pt.avg_price)
+
     print(pt.goods)
-    pt + 1
-    print(pt.goods)
+    # print(pt)
+    # pt + a1
+    # print(pt.goods)
+    # pt + 1
+    # print(pt.goods)
+    # print(pt.add_good(a1))
+    # print(pt.add_good(b1))
+
+    # print(pt.goods)
     #     # a = [{"name": "Sams Ul",
     #     #       "description": "125GB",
     #     #       "price": 1000.0,
@@ -193,8 +240,6 @@ if __name__ == '__main__':
     #     # exp.goods = a
     #     # print(exp.goods)
     #
-
-
 
     # b1 = Phone("Umi", '555', 50, 2, 500, '7', 125, 'black')
     # c1 = Grass("Лопух", 'Большой', 100, 3, 'Россия', 1, 'black')

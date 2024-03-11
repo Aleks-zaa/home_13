@@ -1,6 +1,7 @@
 import json
 import os
 from src.classes import Category, Product
+
 # from src.category import Category
 # from src.product import Product
 
@@ -61,3 +62,19 @@ def create_obj_category():
         # print(pt)
         return ct
 
+    def avg_price(self):
+        """
+            Метод подсчитывает средний ценник всех товаров.
+            С помощью исключений обработать случай, когда в категории нет товаров
+            и сумма всех товаров будет делиться на ноль.
+            В случае, если такое происходит, возвращать ноль.
+        """
+        total_sum = 0
+        total_quant = 0
+        try:
+            for product in self.__products:
+                total_sum += product.price * product.quantity
+                total_quant += product.quantity
+            return total_sum / total_quant
+        except ZeroDivisionError:
+            return 0
