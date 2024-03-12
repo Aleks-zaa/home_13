@@ -11,10 +11,10 @@ class UserError(Exception):
     """ Пользовательский класс обработки исключения """
     message = ""
 
-    def init(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.message = args[0] if args else 'Проблемы с параметрами объекта'
 
-    def str(self):
+    def __str__(self):
         return self.message
 
 
@@ -59,7 +59,7 @@ class Category(SampleOrder):
         if isinstance(value, Product):
             try:
                 if value.quantity <= 0:
-                    raise UserError
+                    raise UserError("Продукт с нулевым количеством не может быть добавлен")
             except UserError as e:
                 e.message = "Продукт с нулевым количеством не может быть добавлен"
                 print(e)
@@ -77,7 +77,7 @@ class Category(SampleOrder):
         total_quantity = 0
         try:
             for item in self.__goods:
-                total_sum += item.price * item.quantity
+                total_sum += item.price
                 total_quantity += item.quantity
             return total_sum / total_quantity
         except ZeroDivisionError as e:
@@ -217,7 +217,7 @@ if __name__ == '__main__':
     pt = Category('port', 'www', list_goods)
     print(pt.avg_price)
 
-    print(pt.goods)
+    # print(pt.goods)
     # print(pt)
     # pt + a1
     # print(pt.goods)
