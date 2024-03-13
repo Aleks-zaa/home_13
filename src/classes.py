@@ -61,7 +61,7 @@ class Category(SampleOrder):
                 if value.quantity <= 0:
                     raise UserError("Продукт с нулевым количеством не может быть добавлен")
             except UserError as e:
-                e.message = "Продукт с нулевым количеством не может быть добавлен"
+                e.message = "Что то не сработало в проверке"
                 print(e)
             else:
                 self.__goods.append(value)
@@ -203,19 +203,20 @@ class Grass(Product, MixinProduct):
 
 
 if __name__ == '__main__':
-    a1 = Product("Sams", "15GB", 100.0, 0, "black")
+    a1 = Product("Sams", "15GB", 100.0, 10, "black")
     b1 = Product("ttt", "10GB", 500.0, 2, "red")
     # product_data = [{'name': 'UMI 999', 'description': '000GB, Серый', 'price': 444.0, 'quantity': 10,
     #                  "color": "black"}]
-    list_goods = [
-        {'name': 'Samsung Galaxy C23 Ultra', 'description': '256GB, Серый цвет, 200MP камера', 'price': 180000.0,
-         'quantity': 5, 'color': 'black'},
-        {'name': 'Iphone 15', 'description': '512GB, Gray space', 'price': 210000.0, 'quantity': 8, 'color': 'black'},
-        {'name': 'Xiaomi Redmi Note 11', 'description': '1024GB, Синий', 'price': 31000.0, 'quantity': 14,
-         'color': 'black'}]
+    prods = [a1, b1]
+    # list_goods = [
+    #     {'name': 'Samsung Galaxy C23 Ultra', 'description': '256GB, Серый цвет, 200MP камера', 'price': 180000.0,
+    #      'quantity': 5, 'color': 'black'},
+    #     {'name': 'Iphone 15', 'description': '512GB, Gray space', 'price': 210000.0, 'quantity': 8, 'color': 'black'},
+    #     {'name': 'Xiaomi Redmi Note 11', 'description': '1024GB, Синий', 'price': 31000.0, 'quantity': 14,
+    #      'color': 'black'}]
 
-    pt = Category('port', 'www', list_goods)
-    print(pt.avg_price)
+    pt = Category('port', 'www', prods)
+    print(pt.avg_price())
 
     # print(pt.goods)
     # print(pt)
